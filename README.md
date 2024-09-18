@@ -2,7 +2,7 @@
 
 ## 最終課題を作成します。
 
-今回はCRUD機能をもったREST APIを作成します。
+CRUD機能をもったREST APIを作成します。
 
 ## 開発環境
 
@@ -23,6 +23,19 @@
 
 ```curl
 curl --location 'http://localhost:8080/names'
+```
+
+### 名前の始まりを取得するAPI
+
+- リクエスト
+    - Method: GET
+    - URL:/names?startsWith=｛｝
+- レスポンス
+    - ステータスコード: 200
+    - ボディ: 名前のリストをJSON形式で返す
+
+```curl
+curl --location 'http://localhost:8080/names?startsWith=あ'
 ```
 
 ### 指定したIDの名前を取得するAPI
