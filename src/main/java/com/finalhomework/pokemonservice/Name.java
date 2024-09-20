@@ -1,6 +1,7 @@
 package com.finalhomework.pokemonservice;
 
 public class Name {
+
     private Integer id;
     private String name;
     private String type1;

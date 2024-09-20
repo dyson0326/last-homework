@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 public class PokemonController {
@@ -20,12 +19,7 @@ public class PokemonController {
 
     @GetMapping("/names")
     public List<Name> getName(@RequestParam(value = "startsWith", required = false) String startsWith) {
-        List<Name> names;
-        if (Objects.nonNull(startsWith)) {
-            names = pokemonService.getName(startsWith);
-        } else {
-            names = pokemonService.allName();
-        }
+        List<Name> names = pokemonService.getName(startsWith);
         return names;
     }
 

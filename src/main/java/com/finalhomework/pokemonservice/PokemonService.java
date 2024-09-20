@@ -3,6 +3,7 @@ package com.finalhomework.pokemonservice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -16,13 +17,13 @@ public class PokemonService {
     }
 
     public List<Name> getName(String startsWith) {
-
-        return pokemonMapper.findByNameStartingWith(startsWith);
-    }
-
-    public List<Name> allName() {
-
-        return pokemonMapper.findAll();
+        List<Name> names;
+        if (Objects.nonNull(startsWith)) {
+            names = pokemonMapper.findByNameStartingWith(startsWith);
+        } else {
+            names = pokemonMapper.findAll();
+        }
+        return names;
     }
 
     public Name findNameById(int id) {
