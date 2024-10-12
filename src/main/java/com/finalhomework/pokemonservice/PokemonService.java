@@ -1,5 +1,9 @@
-package com.finalhomework.pokemonservice;
+package com.finalhomework.pokemonservice.service;
 
+import com.finalhomework.pokemonservice.Name;
+import com.finalhomework.pokemonservice.PokemonMapper;
+import com.finalhomework.pokemonservice.PokemonNotFoundException;
+import com.finalhomework.pokemonservice.Trainer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +33,14 @@ public class PokemonService {
     public Name findNameById(int id) {
         Optional<Name> name = pokemonMapper.findById(id);
         return name.orElseThrow(() -> new PokemonNotFoundException("pokemon not found"));
+    }
+
+    public Trainer insert(String name, String type1, String type2) {
+//        String sql = "SELECT * FROM pokemon WHERE name";
+//        List<String> nameList = sql.getString("name");
+        Trainer trainer = new Trainer(name, type1, type2);
+        trainerMapper.insert(trainer);
+        return trainer;
     }
 
 }
