@@ -14,6 +14,13 @@ public class Name {
         this.type2 = type2;
     }
 
+    public Name(String name, String type1, String type2) {
+        this.id = null;
+        this.name = name;
+        this.type1 = type1;
+        this.type2 = type2;
+    }
+
     public Integer getId() {
         return id;
     }
