@@ -74,3 +74,102 @@ curl --location 'http://localhost:8080/names/1'
   "status": "404"
 }
 ```
+
+### 情報を登録するAPI
+
+- リクエスト
+    - Method: POST
+    - URL:/names
+- レスポンス
+    - ステータスコード: 201
+    - ボディ: "message": "pokemon created"を返す
+    - 名前が重複した場合409を返す
+    - 名前やType1が未入力の場合は400を返す
+    - 指定したタイプ以外は400を返す
+
+```curl
+curl --location 'http://localhost:8080/names'
+```
+
+- リクエスト
+
+```json
+{
+  "name": "全角カタカナ",
+  "type1": "必須入力",
+  "type2": ""
+}
+```
+
+- 登録成功時のレスポンス
+
+```
+{
+"message": "pokemon created"
+}
+```
+
+- 名前が重複時のレスポンス
+
+```
+{
+    "path": "/names",
+    "error": "Conflict",
+    "timestamp": "2024-10-11T05:20:03.710137900+09:00[Asia/Tokyo]",
+    "message": "ポケモンは既に存在しています",
+    "status": "409"
+}
+```
+
+- 名前が未入力または不正なタイプが入力された時のレスポンス
+
+```
+{
+  "status": "BAD_REQUEST",
+  "message": "validation error",
+  "errors": [
+    {
+      "field": "type1",
+      "message": "無効なタイプです。"
+    },
+    {
+      "field": "name",
+      "message": "値を入力してください"
+    }
+  ]
+}
+```
+
+### 情報を更新するAPI
+
+- リクエスト
+    - Method: PATCH
+    - URL:/names/｛id｝
+- レスポンス
+    - ステータスコード: 200
+    - ボディ: "message": "pokemon update"を返す
+    - 存在しないIDをリクエストされた場合404を返す
+
+```curl
+curl --location 'http://localhost:8080/names/1'
+```
+
+- 登録成功時のレスポンス
+
+```
+{
+"message": "pokemon created"
+}
+```
+
+- 存在しないIDの場合のレスポンス
+
+```json
+{
+  "message": "存在しないIDです",
+  "timestamp": "2022-07-07T00:38:53.260151+09:00[Asia/Tokyo]",
+  "error": "Not Found",
+  "path": "/names/100",
+  "status": "404"
+}
+```

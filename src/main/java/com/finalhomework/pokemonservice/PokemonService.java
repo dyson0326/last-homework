@@ -1,9 +1,7 @@
-package com.finalhomework.pokemonservice.service;
+package com.finalhomework.pokemonservice;
 
-import com.finalhomework.pokemonservice.Name;
-import com.finalhomework.pokemonservice.PokemonMapper;
-import com.finalhomework.pokemonservice.PokemonNotFoundException;
-import com.finalhomework.pokemonservice.Trainer;
+import com.finalhomework.pokemonservice.Excption.NameDuplicateException;
+import com.finalhomework.pokemonservice.Excption.PokemonNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +18,7 @@ public class PokemonService {
         this.pokemonMapper = pokemonMapper;
     }
 
+    //startsWithに値があれば部分検索　なければ全件検索
     public List<Name> getName(String startsWith) {
         List<Name> names;
         if (Objects.nonNull(startsWith)) {
@@ -30,17 +29,34 @@ public class PokemonService {
         return names;
     }
 
+    //IDで検索
     public Name findNameById(int id) {
         Optional<Name> name = pokemonMapper.findById(id);
         return name.orElseThrow(() -> new PokemonNotFoundException("pokemon not found"));
     }
 
-    public Trainer insert(String name, String type1, String type2) {
-//        String sql = "SELECT * FROM pokemon WHERE name";
-//        List<String> nameList = sql.getString("name");
-        Trainer trainer = new Trainer(name, type1, type2);
-        trainerMapper.insert(trainer);
-        return trainer;
+    //指定された値を挿入　
+    public Name insert(String name, String type1, String type2) {
+        List<Name> nameList = pokemonMapper.findAll();
+        //挿入時の重複チェック
+        for (Name allname : nameList) {
+            if (allname.getName().contains(name)) {
+                throw new NameDuplicateException(name + "は既に存在しています");
+            }
+        }
+        Name newName = new Name(name, type1, type2);
+        pokemonMapper.insert(newName);
+        return newName;
+    }
+
+    //指定されたIDのデータを更新する
+    public Name update(int id, String name, String type1, String type2) {
+        //存在しないIDの場合の処理
+        Name idJudge = pokemonMapper.findById(id).orElseThrow(() -> new PokemonNotFoundException("存在しないIDです"));
+        //更新処理
+        Name updateName = new Name(id, name, type1, type2);
+        pokemonMapper.update(updateName);
+        return updateName;
     }
 
 }
