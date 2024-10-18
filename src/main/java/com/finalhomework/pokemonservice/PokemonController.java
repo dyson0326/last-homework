@@ -49,4 +49,11 @@ public class PokemonController {
         return ResponseEntity.ok(body);
     }
 
+    //削除処理
+    @DeleteMapping("/names/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+        pokemonService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -28,4 +28,9 @@ public interface PokemonMapper {
     //指定されたIDのデータを更新する
     @Update("UPDATE pokemon SET name = #{name}, type1 = #{type1}, type2 = #{type2} WHERE id = #{id}")
     void update(Name updateName);
+
+    //指定されたIDのデータを削除する
+    @Delete("DELETE FROM pokemon WHERE id = #{id}")
+    int deleteId(int id);
+
 }
