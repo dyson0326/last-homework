@@ -59,4 +59,12 @@ public class PokemonService {
         return updateName;
     }
 
+    //指定されたIDのデータを削除する
+    public void delete(int id) {
+        //存在しないIDの場合の処理
+        Name idJudge = pokemonMapper.findById(id).orElseThrow(() -> new PokemonNotFoundException("存在しないIDです"));
+        //削除処理
+        pokemonMapper.deleteId(id);
+    }
+
 }

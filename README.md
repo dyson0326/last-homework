@@ -173,3 +173,31 @@ curl --location 'http://localhost:8080/names/1'
   "status": "404"
 }
 ```
+
+### 情報を削除するAPI
+
+- リクエスト
+    - Method: DELETE
+    - URL:/names/｛id｝
+- レスポンス
+    - ステータスコード: 204
+    - ボディ: なし
+    - 存在しないIDをリクエストされた場合404を返す
+
+```curl
+curl --location 'http://localhost:8080/names/1'
+```
+
+- 削除成功時はレスポンスボディなし
+
+- 存在しないIDの場合のレスポンス
+
+```json
+{
+  "message": "存在しないIDです",
+  "timestamp": "2022-07-07T00:38:53.260151+09:00[Asia/Tokyo]",
+  "error": "Not Found",
+  "path": "/names/100",
+  "status": "404"
+}
+```
