@@ -1,5 +1,7 @@
 package com.finalhomework.pokemonservice;
 
+import java.util.Objects;
+
 public class Name {
 
     private Integer id;
@@ -37,4 +39,26 @@ public class Name {
         return type2;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name1 = (Name) o;
+        return Objects.equals(id, name1.id) && Objects.equals(name, name1.name) && Objects.equals(type1, name1.type1) && Objects.equals(type2, name1.type2);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type1, type2);
+    }
+
+    @Override
+    public String toString() {
+        return "Name{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type1='" + type1 + '\'' +
+                ", type2='" + type2 + '\'' +
+                '}';
+    }
 }
