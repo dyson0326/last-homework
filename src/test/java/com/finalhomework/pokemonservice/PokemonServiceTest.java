@@ -93,4 +93,41 @@ class PokemonServiceTest {
         verify(pokemonMapper, never()).insert(newName);
     }
 
+    @Test
+    public void 指定したIDのポケモンを更新する() {
+        Name updateName = new Name(9, "ジグザグマ", "ノーマル", "");
+        doReturn(Optional.of(new Name(9, "ラグラージ", "みず", "じめん"))).when(pokemonMapper).findById(9);
+
+        Name actual = pokemonService.update(9, "ジグザグマ", "ノーマル", "");
+        assertThat(actual).isEqualTo(updateName);
+
+        verify(pokemonMapper).update(updateName);
+    }
+
+    @Test
+    public void 存在しないIDを更新しようとすると例外をスローする() {
+        Name updateName = new Name(13, "マッスグマ", "ノーマル", "");
+
+        assertThatThrownBy(() -> pokemonService.update(13, "マッスグマ", "ノーマル", "")).isInstanceOf(PokemonNotFoundException.class);
+
+        verify(pokemonMapper, never()).update(updateName);
+    }
+
+    @Test
+    public void 指定したIDのポケモンを削除する() {
+        doReturn(Optional.of(new Name(5, "ワカシャモ", "ほのお", "かくとう"))).when(pokemonMapper).findById(5);
+
+        pokemonService.delete(5);
+
+        verify(pokemonMapper).deleteId(5);
+    }
+
+    @Test
+    public void 存在しないIDを削除しようとすると例外をスローする() {
+
+        assertThatThrownBy(() -> pokemonService.delete(100)).isInstanceOf(PokemonNotFoundException.class);
+
+        verify(pokemonMapper, never()).deleteId(100);
+    }
+
 }
