@@ -1,0 +1,10 @@
+cacheConnection: false
+cacheTableNames: false
+properties:
+  allowEmptyFields: true
+  schema: pokemon_database
+caseInsensitiveStrategy: LOWERCASE
+connectionConfig:
+  url: "jdbc:mysql://localhost:3307/pokemon_database"
+  user: "user"
+  password: "password"
