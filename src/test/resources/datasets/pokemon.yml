@@ -1,0 +1,37 @@
+pokemon:
+  - id: 1
+    name: "キモリ"
+    type1: "くさ"
+    type2: ""
+  - id: 2
+    name: "ジュプトル"
+    type1: "くさ"
+    type2: ""
+  - id: 3
+    name: "ジュカイン"
+    type1: "くさ"
+    type2: ""
+  - id: 4
+    name: "アチャモ"
+    type1: "ほのお"
+    type2: ""
+  - id: 5
+    name: "ワカシャモ"
+    type1: "ほのお"
+    type2: "かくとう"
+  - id: 6
+    name: "バシャーモ"
+    type1: "ほのお"
+    type2: "かくとう"
+  - id: 7
+    name: "ミズゴロウ"
+    type1: "みず"
+    type2: ""
+  - id: 8
+    name: "ヌマクロー"
+    type1: "みず"
+    type2: "じめん"
+  - id: 9
+    name: "ラグラージ"
+    type1: "みず"
+    type2: "じめん"
