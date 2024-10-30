@@ -67,8 +67,8 @@ class PokemonMapperTest {
 
     @Test
     @DataSet(value = "datasets/pokemon.yml")
-    @ExpectedDataSet(value = "datasets/insert-pokemon.yml")
     @Transactional
+    @ExpectedDataSet(value = "datasets/insert-pokemon.yml")
     void 指定された内容を挿入() {
         Name newName = new Name("ハスボー", "みず", "くさ");
         pokemonMapper.insert(newName);
