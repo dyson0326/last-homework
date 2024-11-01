@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,8 +19,12 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PokemonMapperTest {
+
     @Autowired
     PokemonMapper pokemonMapper;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Test
     @DataSet(value = "datasets/pokemon.yml")
@@ -70,6 +75,10 @@ class PokemonMapperTest {
     @ExpectedDataSet(value = "datasets/insert-pokemon.yml")
     @Transactional
     void 指定された内容を挿入() {
+
+        //次に付与されるAUTO_INCREMENTによる番号を10にする
+        jdbcTemplate.execute("ALTER TABLE pokemon AUTO_INCREMENT = 10");
+
         Name newName = new Name("ハスボー", "みず", "くさ");
         pokemonMapper.insert(newName);
 
@@ -80,7 +89,9 @@ class PokemonMapperTest {
                 .hasValue(
                         new Name(newPokemonID, "ハスボー", "みず", "くさ")
                 );
+
     }
+
 
     @Test
     @DataSet(value = "datasets/pokemon.yml")

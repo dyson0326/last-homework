@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DBRider
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PokemonRestApiIntegrationTest {
-    
+
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Test
     @DataSet(value = "datasets/pokemon.yml")
@@ -165,6 +169,10 @@ class PokemonRestApiIntegrationTest {
     @ExpectedDataSet(value = "datasets/insert-pokemon.yml")
     @Transactional
     void 指定されたデータを登録() throws Exception {
+
+        //次に付与されるAUTO_INCREMENTによる番号を10にする
+        jdbcTemplate.execute("ALTER TABLE pokemon AUTO_INCREMENT = 10");
+
         mockMvc.perform(post("/names")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
