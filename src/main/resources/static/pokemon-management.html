@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ポケモン</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/pokemon.js"></script>
+</head>
+<body>
+<h1>ポケモン</h1>
+
+<div id="messageContainer" style="color: red; font-size: 20px;"></div>
+
+<form id="pokemonForm" th:action="@{/pokemon/newnames}" method="POST" onsubmit="addPokemon(event)">
+
+    <label for="name">ポケモンの名前:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="type1">タイプ1:</label>
+    <input type="text" id="type1" name="type1" required><br><br>
+
+    <label for="type2">タイプ2:</label>
+    <input type="text" id="type2" name="type2"><br><br>
+
+    <button type="submit">追加</button>
+
+</form>
+
+<br>
+<table>
+    <button onclick="loadPokemonList()">ポケモン一覧を表示</button>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>type1</th>
+        <th>type2</th>
+    </tr>
+    </thead>
+
+    <tbody id="pokemonTableBody">
+    </tbody>
+
+</table>
+</body>
+</html>

@@ -5,6 +5,6 @@ properties:
   schema: pokemon_database
 caseInsensitiveStrategy: LOWERCASE
 connectionConfig:
-  url: "jdbc:mysql://localhost:3307/pokemon_database"
+  url: "jdbc:mysql://localhost:3306/pokemon_database"
   user: "user"
   password: "password"
