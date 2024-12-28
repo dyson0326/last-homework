@@ -33,4 +33,7 @@ public interface PokemonMapper {
     @Delete("DELETE FROM pokemon WHERE id = #{id}")
     int deleteId(int id);
 
+    @Select("SELECT * FROM TypeList")
+    List<Type> AllType();
+
 }

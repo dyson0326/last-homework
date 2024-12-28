@@ -2,12 +2,15 @@ package com.finalhomework.pokemonservice;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/pokemon")
@@ -36,7 +39,13 @@ public class PokemonController {
 
     //入力されたデータの挿入
     @PostMapping("/newnames")
-    public ResponseEntity<NameResponse> insert(@ModelAttribute @Validated NameRequest nameRequest, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<NameResponse> insert(@ModelAttribute @Validated NameRequest nameRequest, BindingResult bindingResult, UriComponentsBuilder uriBuilder) {
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+            return ResponseEntity.badRequest().body(new NameResponse(errorMessage));
+        }
         Name name = pokemonService.insert(nameRequest.getName(), nameRequest.getType1(), nameRequest.getType2());
         URI location = uriBuilder.path("/names/{id}").buildAndExpand(name.getId()).toUri();
         NameResponse body = new NameResponse("追加しました");
@@ -57,6 +66,14 @@ public class PokemonController {
         pokemonService.delete(id);
         NameResponse body = new NameResponse("削除しました");
         return ResponseEntity.ok(body);
+    }
+
+    //タイプ一覧取得
+    @GetMapping("/type")
+    @ResponseBody
+    public List<Type> getType() {
+        List<Type> types = pokemonService.getType();
+        return types;
     }
 
 }

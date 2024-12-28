@@ -67,4 +67,11 @@ public class PokemonService {
         pokemonMapper.deleteId(id);
     }
 
+    //Typeを全取得
+    public List<Type> getType() {
+        List<Type> types;
+        types = pokemonMapper.AllType();
+        return types;
+    }
+
 }
